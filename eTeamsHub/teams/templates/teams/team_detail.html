@@ -1,0 +1,14 @@
+{% extends "main/base.html" %}
+{% block title %} {{ team.name }} {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center">
+        {% if team.logo %}
+            <img src="{{ team.logo.url }}" alt="{{ team.name }}" class="mb-4" style="max-height: 200px;">
+        {% endif %}
+        <h2>{{ team.name }}</h2>
+        <p class="text-muted">{{ team.description }}</p>
+    </div>
+</div>
+{% endblock %}

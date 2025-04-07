@@ -1,0 +1,38 @@
+{% extends 'main/base.html'%}
+{% block title %} Teams List {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Available Teams</h2>
+
+    {% if teams %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            {% for team in teams %}
+                <div class="col">
+                    <div class="card h-100 text-center shadow-sm">
+                        {% if team.logo %}
+                            <img src="{{ team.logo.url }}" class="card-img-top p-3" alt="{{ team.name }}" style="height: 200px; object-fit: contain;">
+                        {% else %}
+                            <div class="card-img-top p-3 text-muted" style="height: 200px; background-color: #f0f0f0;">
+                                No Image
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'teams:team_detail' team.id %}" class="text-decoration-none">
+                                    {{ team.name }}
+                                </a>
+                            </h5>
+                            <p class="card-text text-muted" style="font-size: 0.95rem;">
+                                {{ team.description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">No teams available.</p>
+    {% endif %}
+</div>
+{% endblock %}

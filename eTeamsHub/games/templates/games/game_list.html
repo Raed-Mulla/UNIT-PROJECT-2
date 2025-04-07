@@ -1,0 +1,31 @@
+{% extends 'main/base.html'%}
+{% block title %} Game List {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Available Games</h2>
+
+    {% if games %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            {% for game in games %}
+                <div class="col">
+                    <div class="card h-100 text-center shadow-sm">
+                        {% if game.logo %}
+                            <img src="{{ game.logo.url }}" class="card-img-top p-3" alt="{{ game.name }}" style="height: 200px; object-fit: contain;">
+                        {% else %}
+                            <div class="card-img-top p-3 text-muted" style="height: 200px; background-color: #f0f0f0;">
+                                No Image
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ game.name }}</h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">No games available yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
