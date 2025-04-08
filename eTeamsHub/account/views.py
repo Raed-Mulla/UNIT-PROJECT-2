@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate , login , logout
 from .models import Profile
+from .forms import AvatarForm
+from teams.models import Team
 # Create your views here.
 
 def sign_in(request:HttpRequest):
@@ -28,7 +30,10 @@ def sign_up(request:HttpRequest):
             new_user = User.objects.create_user(username=request.POST["username"],password=request.POST["password"],email=request.POST["email"],first_name=request.POST["first_name"],last_name=request.POST["last_name"])
             new_user.save()
 
-            Profile.objects.create(user=new_user)
+            
+            avatar = request.FILES.get("avatar")
+            Profile.objects.create(user=new_user, avatar=avatar)
+            
             messages.success( request ,"Register Successfuly", "alert-success" )
             return redirect("account:sign_in")
         except Exception as e:
@@ -52,3 +57,29 @@ def profile_view(request:HttpRequest , user_name):
         return HttpResponse("error")
     
     return render(request, "account/profile.html")
+
+
+def edit_avatar(request: HttpRequest):
+    profile = request.user.profile
+
+    if request.method == "POST":
+        form = AvatarForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Avatar updated successfully!")
+            return redirect("account:profile_view", user_name=request.user.username)
+    else:
+        form = AvatarForm(instance=profile)
+
+    return render(request, "account/edit_avatar.html", {"form": form})
+
+def favorite_team(request, team_id):
+    if request.user.is_authenticated:
+        try:
+            team = Team.objects.get(id=team_id)
+            request.user.profile.favorite_team = team
+            request.user.profile.save()
+            messages.success(request, "Favorite team updated!")
+        except Team.DoesNotExist:
+            messages.error(request, "Team not found.")
+    return redirect("teams:team_detail", team_id=team_id)

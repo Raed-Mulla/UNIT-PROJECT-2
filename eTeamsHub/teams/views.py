@@ -1,8 +1,9 @@
 from django.shortcuts import render , redirect
 from django.http import HttpRequest,HttpResponse
 from django.contrib import messages
-from .forms import TeamForm
-from .models import Team
+from .forms import TeamForm , AddTournamentForm , AddGamesToTeam
+from .models import Team , Tournament
+from games.models import Game
 
 # Create your views here.
 def add_team(request: HttpRequest):
@@ -34,4 +35,73 @@ def team_detail(request: HttpRequest, team_id):
     except Team.DoesNotExist:
         return render(request, "404.html", status=404)
 
-    return render(request, "teams/team_detail.html", {"team": team})
+    is_favorite = False
+    if request.user.is_authenticated:
+        is_favorite = request.user.profile.favorite_team == team
+
+    return render(request, "teams/team_detail.html", {"team": team,"is_favorite": is_favorite})
+
+
+def add_tournament(request, team_id):
+    try:
+        team = Team.objects.get(id=team_id)
+
+
+        if request.method == "POST":
+            tournaments = AddTournamentForm(request.POST)
+
+            if tournaments.is_valid():
+                tournament_name = request.POST.get('tournament_name') 
+
+                if tournament_name:
+                    tournament, created = Tournament.objects.get_or_create(name=tournament_name)
+                    team.tournaments.add(tournament)
+
+                messages.success(request, "Tournament added successfully!")
+                return redirect("teams:team_detail", team_id=team.id)
+            else:
+                messages.error(request, "Something went wrong.")
+        else:
+            tournaments = AddTournamentForm()
+    except Team.DoesNotExist:
+        return render(request, "404.html", status=404)
+
+    return render(request, "teams/add_tournament.html", {"tournaments": tournaments, "team": team})
+
+
+def add_games_to_team(request, team_id):
+    try:
+        team = Team.objects.get(id=team_id)
+
+        if request.method == "POST":
+            game = AddGamesToTeam(request.POST, instance=team)
+            if game.is_valid():
+                game.save()
+                messages.success(request, "Games added successfully!")
+                return redirect("teams:team_detail", team_id=team.id)
+            else:
+                messages.error(request, "Something went wrong.")
+        else:
+            game = AddGamesToTeam(instance=team)
+    except Team.DoesNotExist:
+        return render(request, "404.html", status=404)
+
+    return render(request, "teams/add_games.html", {"game": game, "team": team})
+
+
+def remove_game_from_team(request, team_id, game_id):
+    try:
+        team = Team.objects.get(id=team_id)
+        game = Game.objects.get(id=game_id)
+
+        team.games.remove(game)
+        messages.success(request, f"{game.name} removed from {team.name}" , "alert-success")
+        return redirect("teams:team_detail", team_id=team.id)
+
+    except Team.DoesNotExist:
+        messages.error(request, "Team not found.")
+        return render(request, "404.html", status=404)
+
+    except Game.DoesNotExist:
+        messages.error(request, "Game not found.")
+        return render(request, "404.html", status=404)

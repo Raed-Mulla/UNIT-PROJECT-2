@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Edit Avatar {% endblock %}
+
+{% block content %}
+<div class="container d-flex flex-column justify-content-center align-items-center mt-5">
+    <h2>Edit Avatar</h2>
+
+    <form class="d-flex flex-column gap-3 w-50" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="text-center">
+            <img src="{{ user.profile.avatar.url }}" class="rounded-circle shadow mb-3" style="width: 150px; height: 150px; object-fit: cover;" alt="Current Avatar">
+        </div>
+
+        <div class="form-floating">
+            <input type="file" class="form-control" id="floatingAvatar" name="avatar" required>
+            <label for="floatingAvatar">Choose New Avatar</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-2">Update Avatar</button>
+    </form>
+</div>
+{% endblock %}

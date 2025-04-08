@@ -27,3 +27,8 @@ def add_game(request: HttpRequest):
 def game_list(request):
     games = Game.objects.all()
     return render(request, "games/game_list.html", {"games": games})
+
+def game_detail(request, game_id):
+    game = Game.objects.get(id=game_id)
+    teams = game.teams.all()
+    return render(request, 'games/game_detail.html', {'game': game, 'teams': teams})

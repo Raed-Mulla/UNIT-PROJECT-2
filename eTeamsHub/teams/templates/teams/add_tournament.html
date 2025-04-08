@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Add Tournament {% endblock %}
+
+{% block content %}
+<div class="container d-flex flex-column justify-content-center align-items-center mt-5">
+
+    <h2>Add Tournament to {{ team.name }}</h2>
+
+    <form class="d-flex flex-column gap-3 w-50" action="{% url 'teams:add_tournament' team.id %}" method="POST">
+        {% csrf_token %}
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingTournament" placeholder="Tournament Name" name="tournament_name" required>
+            <label for="floatingTournament">Tournament Name</label>
+        </div>
+
+        <button class="btn btn-success w-100 py-2" type="submit">Add Tournament</button>
+    </form>
+</div>
+{% endblock %}

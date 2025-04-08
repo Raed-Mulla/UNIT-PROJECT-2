@@ -9,6 +9,64 @@
         {% endif %}
         <h2>{{ team.name }}</h2>
         <p class="text-muted">{{ team.description }}</p>
+    
+        {% if user.is_authenticated and not is_favorite %}
+        <form method="POST" action="{% url 'account:favorite_team' team.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-success mt-3">
+                ⭐ Set as Favorite Team
+            </button>
+        </form>
+        {% elif user.is_authenticated and is_favorite %}
+        <p class="text-success mt-3">⭐ This is your favorite team</p>
+        {% endif %}
+    
+    
+        <a href="{% url 'teams:add_tournament' team.id %}" class="btn btn-outline-primary mt-3">
+            + Add Tournament
+        </a>
+        <a href="{% url 'teams:add_games' team.id %}" class="btn btn-outline-primary mt-3">
+            + Add Games
+        </a>
     </div>
-</div>
+    
+    </div>
+
+    {% if team.tournaments.all %}
+        <div class="mt-5">
+            <h4 class="text-center">Tournaments</h4>
+            <ul class="list-group w-50 mx-auto mt-3">
+                {% for tournament in team.tournaments.all %}
+                    <li class="list-group-item text-center">{{ tournament.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if team.games.all %}
+    <div class="mt-5">
+        <h3 class="text-center mb-4">Games</h3>
+    
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
+            {% for game in team.games.all %}
+                <div class="col">
+                    <div class="card h-100 text-center shadow-sm">
+                        {% if game.logo %}
+                            <img src="{{ game.logo.url }}" class="card-img-top p-3" alt="{{ game.name }}" style="height: 150px; object-fit: contain;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ game.name }}</h5>
+                            
+                            <form method="POST" action="{% url 'teams:remove_game' team.id game.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger mt-2">Remove</button>
+                            </form>
+                        </div>                        
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
 {% endblock %}

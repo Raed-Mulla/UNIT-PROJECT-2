@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Add Games {% endblock %}
+
+{% block content %}
+<div class="container d-flex flex-column justify-content-center align-items-center mt-5">
+
+    <h2>Add Games to {{ team.name }}</h2>
+
+    <form class="d-flex flex-column gap-3 w-50" method="POST">
+        {% csrf_token %}
+
+        <div class="border rounded p-3">
+            <label class="form-label mb-2"><strong>Select Games</strong></label>
+            {% for checkbox in game.games %}
+                <div class="form-check">
+                    {{ checkbox.tag }} {{ checkbox.choice_label }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Add Games</button>
+    </form>
+</div>
+{% endblock %}
