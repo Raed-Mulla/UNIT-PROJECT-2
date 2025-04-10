@@ -10,11 +10,12 @@
         {% csrf_token %}
 
         <div class="text-center">
-            <img src="{{ user.profile.avatar.url }}" class="rounded-circle shadow mb-3" style="width: 150px; height: 150px; object-fit: cover;" alt="Current Avatar">
+            <img src="{{ user.profile.avatar.url }}" class="card-img-top p-3"
+                style="height: 150px; object-fit: contain;" alt="Current Avatar">
         </div>
 
         <div class="form-floating">
-            <input type="file" class="form-control" id="floatingAvatar" name="avatar" required>
+            <input type="file" class="form-control" id="floatingAvatar" name="avatar" accept="image/*" required>
             <label for="floatingAvatar">Choose New Avatar</label>
         </div>
 

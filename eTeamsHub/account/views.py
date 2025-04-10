@@ -9,7 +9,9 @@ from teams.models import Team
 # Create your views here.
 
 def sign_in(request:HttpRequest):
-    
+    if request.user.is_authenticated:
+        messages.success(request,"You are already Sign in","alert-success")
+        return redirect("main:home")
     if request.method == "POST":
 
         user = authenticate(request,username=request.POST["username"],password=request.POST["password"])
@@ -24,7 +26,9 @@ def sign_in(request:HttpRequest):
     return render(request,"account/signin.html")
 
 def sign_up(request:HttpRequest):
-
+    if request.user.is_authenticated:
+        messages.success(request,"You are already Sign in","alert-success")
+        return redirect("main:home")
     if request.method == "POST":
         try:
             new_user = User.objects.create_user(username=request.POST["username"],password=request.POST["password"],email=request.POST["email"],first_name=request.POST["first_name"],last_name=request.POST["last_name"])
@@ -50,6 +54,8 @@ def log_out(request:HttpRequest):
 
 def profile_view(request:HttpRequest , user_name):
 
+    if not request.user.is_authenticated:
+        return redirect("account:sign_in")
     try:
         user = User.objects.get(username=user_name)
         profile = user.profile
@@ -60,13 +66,15 @@ def profile_view(request:HttpRequest , user_name):
 
 
 def edit_avatar(request: HttpRequest):
+    if not request.user.is_authenticated:
+        return redirect("account:sign_in")
     profile = request.user.profile
 
     if request.method == "POST":
         form = AvatarForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            messages.success(request, "Avatar updated successfully!")
+            messages.success(request, "Avatar updated successfully!" , "alert-success")
             return redirect("account:profile_view", user_name=request.user.username)
     else:
         form = AvatarForm(instance=profile)
@@ -77,9 +85,8 @@ def favorite_team(request, team_id):
     if request.user.is_authenticated:
         try:
             team = Team.objects.get(id=team_id)
-            request.user.profile.favorite_team = team
-            request.user.profile.save()
-            messages.success(request, "Favorite team updated!")
+            request.user.profile.favorite_team.add(team)
+            messages.success(request, "Favorite team updated!" , "alert-success")
         except Team.DoesNotExist:
-            messages.error(request, "Team not found.")
+            messages.error(request, "Team not found." , "alert-danger")
     return redirect("teams:team_detail", team_id=team_id)

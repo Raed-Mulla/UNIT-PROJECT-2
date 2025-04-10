@@ -1,0 +1,63 @@
+{% extends 'main/base.html' %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">Welcome to eTeamsHub</h1>
+        <p class="text-muted">Discover your favorite eSports teams and the games they play.</p>
+    </div>
+
+    <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Teams</h3>
+            <a href="{% url 'teams:team_list' %}" class="btn btn-sm btn-outline-primary">More Teams</a>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for team in teams %}
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm">
+                    {% if team.logo %}
+                    <img src="{{ team.logo.url }}" class="card-img-top p-3" alt="{{ team.name }}"
+                        style="height: 150px; object-fit: contain;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ team.name }}</h5>
+                        <p class="text-muted small">{{ team.description }}</p>
+                        <a href="{% url 'teams:team_detail' team.id %}" class="btn btn-sm btn-outline-primary">View
+                            Team</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Games</h3>
+            <a href="{% url 'games:game_list' %}" class="btn btn-sm btn-outline-primary">More Games</a>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for game in games %}
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm">
+                    {% if game.logo %}
+                    <img src="{{ game.logo.url }}" class="card-img-top p-3" alt="{{ game.name }}"
+                        style="height: 150px; object-fit: contain;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ game.name }}</h5>
+                        <p class="text-muted small">{{ game.description }}</p>
+                        <a href="{% url 'games:game_detail' game.id %}" class="btn btn-sm btn-outline-primary">View
+                            Game</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

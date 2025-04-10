@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% block title %} Add Player {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center mb-4">Add Player to {{ team.name }}</h3>
+
+                    <form method="POST" enctype="multipart/form-data" action="{% url 'player:add_player' team.id %}">
+                        {% csrf_token %}
+
+                        <div class="form-floating mb-3">
+                            <input type="text" name="name" class="form-control" id="floatingName"
+                                placeholder="Player Name" required>
+                            <label for="floatingName">Player Name</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" name="game_name" class="form-control" id="floatingGameName"
+                                placeholder="Game Name" required>
+                            <label for="floatingGameName">Game Name</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input type="file" name="image" class="form-control" id="floatingImage" accept="image/*"
+                                required>
+                            <label for="floatingImage">Player Image</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Add Player</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

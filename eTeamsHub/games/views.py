@@ -6,6 +6,12 @@ from .models import Game
 
 
 def add_game(request: HttpRequest):
+
+    if not request.user.is_staff:
+        messages.error(request, "You are not allowed to access this page. " , "alert-danger")
+        return redirect("main:home")
+    
+
     if request.method == "POST":
         form = GameForm(request.POST, request.FILES)
         game_name = request.POST.get("name", "").strip()

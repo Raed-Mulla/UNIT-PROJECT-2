@@ -1,7 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpRequest,HttpResponse
+from teams.models import Team
+from games.models import Game
 
-# Create your views here.
-def home(request:HttpRequest):
+def home(request):
+    teams = Team.objects.all()[:3]
+    games = Game.objects.all()[:3]
 
-    return render(request , 'main/base.html')
+    return render(request, "main/home.html", {
+        "teams": teams,
+        "games": games,
+    })

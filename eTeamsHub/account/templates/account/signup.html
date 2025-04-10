@@ -7,13 +7,14 @@
 <div class="container d-flex flex-column justify-content-center align-items-center">
 
     <h2>Sign Up</h2>
-    <form class="d-flex flex-column gap-3 w-50" action="{% url 'account:sign_up' %}" method="POST" enctype="multipart/form-data">
+    <form class="d-flex flex-column gap-3 w-50" action="{% url 'account:sign_up' %}" method="POST"
+        enctype="multipart/form-data">
         {% csrf_token %}
-        
-    
+
+
         <div class="form-floating">
-        <input type="email" class="form-control" id="floatingInput" placeholder="@example.com" name="email" required>
-        <label for="floatingInput">Email address</label>
+            <input type="email" class="form-control" id="floatingInput" placeholder="@example.com" name="email" required>
+            <label for="floatingInput">Email address</label>
         </div>
 
         <div class="form-floating">
@@ -27,7 +28,7 @@
         </div>
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Last name" name="last_name" required>
+            <input type="text" class="form-control" id="floatingInput" placeholder="Last name" name="last_name"required>
             <label for="floatingInput">Last name</label>
         </div>
 
@@ -38,9 +39,9 @@
 
         <div class="mb-3">
             <label for="avatarInput" class="form-label">Choose Avatar</label>
-            <input type="file" class="form-control" id="avatarInput" name="avatar">
+            <input type="file" class="form-control" id="avatarInput" name="avatar" accept="image/*" required>
         </div>
-        
+
 
         <button class="btn btn-primary w-100 py-2" type="submit">Sign up</button>
 </div>

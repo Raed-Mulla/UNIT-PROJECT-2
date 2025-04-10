@@ -13,9 +13,9 @@
         <div class="border rounded p-3">
             <label class="form-label mb-2"><strong>Select Games</strong></label>
             {% for checkbox in game.games %}
-                <div class="form-check">
-                    {{ checkbox.tag }} {{ checkbox.choice_label }}
-                </div>
+            <div class="form-check">
+                {{ checkbox.tag }} {{ checkbox.choice_label }}
+            </div>
             {% endfor %}
         </div>
 

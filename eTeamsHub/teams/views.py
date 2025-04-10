@@ -7,6 +7,11 @@ from games.models import Game
 
 # Create your views here.
 def add_team(request: HttpRequest):
+
+    if not request.user.is_staff:
+        messages.error(request, "You are not allowed to access this page." , "alert-danger")
+        return redirect("main:home")
+    
     if request.method == "POST":
         form = TeamForm(request.POST, request.FILES)
         team_name = request.POST.get("name", "").strip()
@@ -37,12 +42,16 @@ def team_detail(request: HttpRequest, team_id):
 
     is_favorite = False
     if request.user.is_authenticated:
-        is_favorite = request.user.profile.favorite_team == team
+        is_favorite = team in request.user.profile.favorite_team.all()
+    players = team.players.all()
 
-    return render(request, "teams/team_detail.html", {"team": team,"is_favorite": is_favorite})
+    return render(request, "teams/team_detail.html", {"team": team,"is_favorite": is_favorite , "players" : players})
 
 
 def add_tournament(request, team_id):
+    if not request.user.is_staff:
+        messages.error(request, "You are not allowed to access this page." , "alert-danger")
+        return redirect("main:home")
     try:
         team = Team.objects.get(id=team_id)
 
@@ -57,10 +66,10 @@ def add_tournament(request, team_id):
                     tournament, created = Tournament.objects.get_or_create(name=tournament_name)
                     team.tournaments.add(tournament)
 
-                messages.success(request, "Tournament added successfully!")
+                messages.success(request, "Tournament added successfully!" , "alert-success")
                 return redirect("teams:team_detail", team_id=team.id)
             else:
-                messages.error(request, "Something went wrong.")
+                messages.error(request, "Something went wrong." , "alert-danger")
         else:
             tournaments = AddTournamentForm()
     except Team.DoesNotExist:
@@ -70,6 +79,9 @@ def add_tournament(request, team_id):
 
 
 def add_games_to_team(request, team_id):
+    if not request.user.is_staff:
+        messages.error(request, "You are not allowed to access this page." , "alert-danger")
+        return redirect("main:home")
     try:
         team = Team.objects.get(id=team_id)
 
@@ -77,7 +89,7 @@ def add_games_to_team(request, team_id):
             game = AddGamesToTeam(request.POST, instance=team)
             if game.is_valid():
                 game.save()
-                messages.success(request, "Games added successfully!")
+                messages.success(request, "Games added successfully!" , "alert-success")
                 return redirect("teams:team_detail", team_id=team.id)
             else:
                 messages.error(request, "Something went wrong.")
@@ -90,6 +102,9 @@ def add_games_to_team(request, team_id):
 
 
 def remove_game_from_team(request, team_id, game_id):
+    if not request.user.is_staff:
+        messages.error(request, "You are not allowed to access this page." , "alert-danger")
+        return redirect("main:home")
     try:
         team = Team.objects.get(id=team_id)
         game = Game.objects.get(id=game_id)

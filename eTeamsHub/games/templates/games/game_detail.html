@@ -4,34 +4,36 @@
 {% block content %}
 <div class="container py-5 text-center">
     <h2 class="mb-4">{{ game.name }}</h2>
-    
+
 
     {% if game.logo %}
-        <img src="{{ game.logo.url }}" alt="{{ game.name }}" style="max-height: 200px;" class="mb-4">
+    <img src="{{ game.logo.url }}" alt="{{ game.name }}" style="max-height: 200px;" class="mb-4">
     {% endif %}
     <p class="text-muted">{{ game.description }}</p>
 
     <h4 class="mt-5 mb-3">Teams Playing {{ game.name }}</h4>
 
     {% if teams %}
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
-            {% for team in teams %}
-                <div class="col">
-                    <div class="card h-100 text-center shadow-sm">
-                        {% if team.logo %}
-                            <img src="{{ team.logo.url }}" class="card-img-top p-3" alt="{{ team.name }}" style="height: 150px; object-fit: contain;">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ team.name }}</h5>
-                            <p class="text-muted small">{{ team.description }}</p>
-                            <a href="{% url 'teams:team_detail' team.id %}" class="btn btn-outline-primary btn-sm">View Team</a>
-                        </div>
-                    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
+        {% for team in teams %}
+        <div class="col">
+            <div class="card h-100 shadow-lg border-0 rounded-4 text-center">
+                {% if team.logo %}
+                <img src="{{ team.logo.url }}" class="card-img-top rounded-top-4 p-3" alt="{{ team.name }}"
+                    style="height: 180px; object-fit: contain;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title mb-2 ">{{ team.name }}</h5>
+                    <p class="text-muted small">{{ team.description }}</p>
+                    <a href="{% url 'teams:team_detail' team.id %}" class="btn btn-sm btn-outline-primary mt-2">View
+                        Team</a>
                 </div>
-            {% endfor %}
+            </div>
         </div>
+        {% endfor %}
+    </div>
     {% else %}
-        <p class="text-muted">No teams are currently playing this game.</p>
+    <p class="text-muted">No teams are currently playing this game.</p>
     {% endif %}
 </div>
 {% endblock %}
