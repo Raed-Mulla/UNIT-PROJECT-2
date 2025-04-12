@@ -18,10 +18,10 @@ Game Management : View all game , add games ,  games detail page .
 
 
 ## User stories 
-(<User stories for eTeamsHub.pdf>)
+[text](<User stories for eTeamsHub.pdf>)
 
 ## UML 
-(<UML for eTeamsHub.png>)
+![alt text](<UML for eTeamsHub.png>)
 
 ## Wireframe 
 (https://www.figma.com/design/lJDLArjnyx5aerKWMFUxym/eTeamsHub?node-id=0-1&t=4y38MvOisYphwyMt-1)
