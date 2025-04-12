@@ -19,8 +19,7 @@
         <div class="col">
             <div class="card h-100 shadow-lg border-0 rounded-4 text-center">
                 {% if team.logo %}
-                <img src="{{ team.logo.url }}" class="card-img-top rounded-top-4 p-3" alt="{{ team.name }}"
-                    style="height: 180px; object-fit: contain;">
+                <img src="{{ team.logo.url }}" class="card-img-top rounded-top-4 p-3" alt="{{ team.name }}" style="height: 180px; object-fit: contain;">
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title mb-2 ">{{ team.name }}</h5>

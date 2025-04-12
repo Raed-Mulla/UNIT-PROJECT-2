@@ -10,8 +10,7 @@
         {% csrf_token %}
 
         <div class="text-center">
-            <img src="{{ user.profile.avatar.url }}" class="card-img-top p-3"
-                style="height: 150px; object-fit: contain;" alt="Current Avatar">
+            <img src="{{ user.profile.avatar.url }}" class="card-img-top p-3" style="height: 150px; object-fit: contain;" alt="Current Avatar">
         </div>
 
         <div class="form-floating">

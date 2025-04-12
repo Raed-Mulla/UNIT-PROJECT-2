@@ -78,7 +78,6 @@ def edit_avatar(request: HttpRequest):
             return redirect("account:profile_view", user_name=request.user.username)
     else:
         form = AvatarForm(instance=profile)
-
     return render(request, "account/edit_avatar.html", {"form": form})
 
 def favorite_team(request, team_id):

@@ -12,8 +12,7 @@
             <div class="card h-100 shadow-lg border-0 rounded-4 text-center">
                 {% if team.logo %}
                 <a href="{% url 'teams:team_detail' team.id %}">
-                    <img src="{{ team.logo.url }}" class="card-img-top rounded-top-4 p-3 img-fluid"
-                        alt="{{ team.name }}" style="height: 180px; object-fit: contain;">
+                    <img src="{{ team.logo.url }}" class="card-img-top rounded-top-4 p-3 img-fluid" style="height: 180px; object-fit: contain;">
                 </a>
                 {% else %}
                 <div class="card-img-top rounded-top-4 p-3 text-muted bg-light" style="height: 180px;">
