@@ -18,7 +18,7 @@ Game Management : View all game , add games ,  games detail page .
 
 
 ## User stories 
-[text](<User stories for eTeamsHub.pdf>)
+[USER Stories](<User stories for eTeamsHub.pdf>)
 
 ## UML 
 ![alt text](<UML for eTeamsHub.png>)
