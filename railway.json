@@ -6,5 +6,4 @@
     "deploy": {
     "startCommand": "cd eTeamsHub && python manage.py migrate && python manage.py loaddata all_data.json && python manage.py collectstatic --noinput && gunicorn eTeamsHub.wsgi"
     }
-  }
-  
+}  
