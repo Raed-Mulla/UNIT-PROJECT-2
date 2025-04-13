@@ -80,21 +80,19 @@ WSGI_APPLICATION = 'eTeamsHub.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+USE_RAILWAY_DB = os.environ.get("RAILWAY") == "True"
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ["PGDATABASE"],
-        'USER': os.environ["PGUSER"],
-        'PASSWORD': os.environ["PGPASSWORD"],
-        'HOST': os.environ["PGHOST"],
-        'PORT': os.environ["PGPORT"],
-    }
-} if not DEBUG else {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql' if USE_RAILWAY_DB else 'django.db.backends.sqlite3',
+        'NAME': os.environ.get("PGDATABASE") if USE_RAILWAY_DB else BASE_DIR / 'db.sqlite3',
+        'USER': os.environ.get("PGUSER", ""),
+        'PASSWORD': os.environ.get("PGPASSWORD", ""),
+        'HOST': os.environ.get("PGHOST", ""),
+        'PORT': os.environ.get("PGPORT", ""),
     }
 }
+
 
 
 # Password validation
