@@ -1,19 +1,6 @@
 [
 {
   "model": "admin.logentry",
-  "pk": 13,
-  "fields": {
-    "action_time": "2025-04-08T18:36:27.910Z",
-    "user": 7,
-    "content_type": 4,
-    "object_id": "1",
-    "object_repr": "raed",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
   "pk": 14,
   "fields": {
     "action_time": "2025-04-09T10:41:27.396Z",
@@ -443,19 +430,6 @@
 },
 {
   "model": "admin.logentry",
-  "pk": 47,
-  "fields": {
-    "action_time": "2025-04-13T07:31:46.399Z",
-    "user": 7,
-    "content_type": 4,
-    "object_id": "11",
-    "object_repr": "raed",
-    "action_flag": 3,
-    "change_message": ""
-  }
-},
-{
-  "model": "admin.logentry",
   "pk": 48,
   "fields": {
     "action_time": "2025-04-13T07:55:56.984Z",
@@ -478,42 +452,6 @@
     "object_repr": "fds",
     "action_flag": 3,
     "change_message": ""
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 7,
-  "fields": {
-    "password": "pbkdf2_sha256$1000000$i4GeJjC3ha0BP5IAmLGbEV$Um3PZos1fwhgTCnDRZvm0ZziyuIdDXqmeHZjBREnFbI=",
-    "last_login": "2025-04-13T08:09:45.556Z",
-    "is_superuser": true,
-    "username": "xraed7",
-    "first_name": "Raed",
-    "last_name": "Mulla",
-    "email": "Xraed20@gmal.com",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2025-04-08T18:33:52Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 12,
-  "fields": {
-    "password": "pbkdf2_sha256$1000000$CC9ACcKLbyU3ifM1BnuMhq$14UFJQDMrMedixa7Zhpppd7ZTbKll3Ayegdpsvi/f6w=",
-    "last_login": "2025-04-13T08:08:59.274Z",
-    "is_superuser": false,
-    "username": "raed",
-    "first_name": "Raed",
-    "last_name": "Mulla",
-    "email": "raed@gmail.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-04-13T07:32:32.047Z",
-    "groups": [],
-    "user_permissions": []
   }
 },
 {
