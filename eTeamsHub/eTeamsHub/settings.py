@@ -143,6 +143,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-if not DEBUG:
-    shutil.copytree(MEDIA_ROOT, os.path.join(BASE_DIR, "staticfiles", "media"), dirs_exist_ok=True)
