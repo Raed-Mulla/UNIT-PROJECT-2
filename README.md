@@ -25,3 +25,7 @@ Game Management : View all game , add games ,  games detail page .
 
 ## Wireframe 
 (https://www.figma.com/design/lJDLArjnyx5aerKWMFUxym/eTeamsHub?node-id=0-1&t=4y38MvOisYphwyMt-1)
+
+## web url
+
+https://eteamshub.up.railway.app/
