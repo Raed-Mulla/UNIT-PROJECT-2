@@ -82,17 +82,24 @@ WSGI_APPLICATION = 'eTeamsHub.wsgi.application'
 
 USE_RAILWAY_DB = os.environ.get("RAILWAY") == "True"
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql' if USE_RAILWAY_DB else 'django.db.backends.sqlite3',
-        'NAME': os.environ.get("PGDATABASE") if USE_RAILWAY_DB else BASE_DIR / 'db.sqlite3',
-        'USER': os.environ.get("PGUSER", ""),
-        'PASSWORD': os.environ.get("PGPASSWORD", ""),
-        'HOST': os.environ.get("PGHOST", ""),
-        'PORT': os.environ.get("PGPORT", ""),
+if USE_RAILWAY_DB:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ["PGDATABASE"],
+            'USER': os.environ["PGUSER"],
+            'PASSWORD': os.environ["PGPASSWORD"],
+            'HOST': os.environ["PGHOST"],
+            'PORT': os.environ["PGPORT"],
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # Password validation
